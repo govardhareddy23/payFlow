@@ -4,14 +4,24 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false, // Use STARTTLS
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS, // This should be an App Password, not your regular password
+    pass: process.env.EMAIL_PASS,
   },
+  tls: {
+    rejectUnauthorized: false // Helps avoid SSL/TLS issues on some cloud platforms
+  }
 });
 
 export const sendOTPEmail = async (email, code, name) => {
+  // BACKUP PLAN: Log the code to console so you can see it in Render Logs!
+  console.log('-----------------------------------------');
+  console.log(`🔑 OTP FOR ${email}: ${code}`);
+  console.log('-----------------------------------------');
+  
   const mailOptions = {
     from: `"PayFlow Secure" <${process.env.EMAIL_USER}>`,
     to: email,
