@@ -1,7 +1,12 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 
+import dns from 'node:dns';
+
 dotenv.config();
+
+// Force IPv4 for better reliability on Render
+dns.setDefaultResultOrder('ipv4first');
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -12,8 +17,10 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
   tls: {
-    rejectUnauthorized: false // Helps avoid SSL/TLS issues on some cloud platforms
-  }
+    rejectUnauthorized: false
+  },
+  connectionTimeout: 10000, // 10 seconds timeout
+  greetingTimeout: 10000,
 });
 
 export const sendOTPEmail = async (email, code, name) => {
