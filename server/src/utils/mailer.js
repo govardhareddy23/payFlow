@@ -24,7 +24,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendOTPEmail = async (email, code, name) => {
-  // BACKUP PLAN: Log the code to console so you can see it in Render Logs!
+  // LOG IT IMMEDIATELY: So the user can see it in Render Logs without waiting!
   console.log('-----------------------------------------');
   console.log(`🔑 OTP FOR ${email}: ${code}`);
   console.log('-----------------------------------------');
@@ -49,12 +49,11 @@ export const sendOTPEmail = async (email, code, name) => {
     `,
   };
 
-  try {
-    await transporter.sendMail(mailOptions);
-    console.log(`Email sent to ${email}`);
-    return true;
-  } catch (error) {
-    console.error('Error sending email:', error);
-    return false;
-  }
+  // 🚀 ASYNC SEND: We don't use 'await' here so the API responds instantly.
+  // The email sends in the background while the user continues.
+  transporter.sendMail(mailOptions)
+    .then(() => console.log(`Email sent successfully to ${email}`))
+    .catch((err) => console.error('Email background send error:', err.message));
+
+  return true; // Return success immediately!
 };
