@@ -69,6 +69,12 @@ npm run dev     # Starts Vite dev server (usually http://localhost:5173)
 
 ---
 
+## 🌍 Deployment
+
+For detailed instructions on how to deploy this application to **Render** (Backend/DB) and **Vercel** (Frontend), please see the [**Deployment Guide**](./DEPLOYMENT_GUIDE.md).
+
+---
+
 ## 📱 Screenshots & Demo
 
 After setup, you can register a new account or use the seeded demo accounts:

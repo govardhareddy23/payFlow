@@ -8,7 +8,7 @@ const initials = n => n.split(" ").map(w=>w[0]).slice(0,2).join("").toUpperCase(
 const avaColor = n => ["#7c3aed","#2563eb","#0891b2","#059669","#d97706","#dc2626"][n.charCodeAt(0)%6];
 
 // ─── API Helpers ─────────────────────────────────────────────────────────────
-const API_URL = "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
 const apiFetch = async (endpoint, method = "GET", body = null, token = null) => {
   const headers = { "Content-Type": "application/json" };
